@@ -12,11 +12,7 @@ jobs:
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 64-bit
         run: gcc -shared -fPIC -o ServyvalPlugin.so ServyvalPlugin.c
-      - name: Package into a tar
-        run: tar -cf archive.tar ServyvalPlugin.so
-      - name: Compress the tar with gzip
-        run: gzip archive.tar
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
-          SOURCE_FILE: 'archive.tar.gz'
-          DEST_NAME: 'ServyvalPlugin-Linux64.tar.gz'
+          SOURCE_FILE: 'ServyvalPlugin.so'
+          DEST_NAME: 'ServyvalPlugin-Linux64.so'
