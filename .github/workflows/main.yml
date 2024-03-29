@@ -1,0 +1,22 @@
+name: build
+run-name: build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone UnkownShadow200/ClassiCube
+        run: git clone https://github.com/UnknownShadow200/ClassiCube
+      - name: Create a symbolic link to `src/`
+        run: ln -s ClassiCube/src/
+      - name: Complile for Linux 64-bit
+        run: gcc -shared -fPIC -o ServyvalPlugin.so ServyvalPlugin.c
+      - name: Package into a tar
+        run: tar -cf archive.tar ServyvalPlugin.so
+      - name: Compress the tar with gzip
+        run: gzip archive.tar
+      - uses: ./ClassiCube/.github/actions/upload_build
+        with:
+          SOURCE_FILE: 'archive.tar.gz'
+          DEST_NAME: 'ServyvalPlugin-Linux64.tar.gz'
