@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Clone UnkownShadow200/ClassiCube
-        run: git clone https://github.com/UnknownShadow200/ClassiCube
+        run: git clone https://github.com/ClassiCube/ClassiCube
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 64-bit
