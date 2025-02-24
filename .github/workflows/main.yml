@@ -2,7 +2,28 @@ name: build
 run-name: build
 on: [push]
 jobs:
-  build:
+  build_linux32:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone ClassiCube/ClassiCube
+        run: git clone https://github.com/ClassiCube/ClassiCube
+      - name: Install packages
+        shell: bash
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get -y update
+          sudo apt-get -y install gcc-multilib libx11-dev:i386 libxi-dev:i386 libgl1-mesa-dev:i386
+      - name: Create a symbolic link to `src/`
+        run: ln -s ClassiCube/src/
+      - name: Complile for Linux 32-bit
+        run: gcc -shared -fPIC -o ServyvalPlugin-Linux32.so ServyvalPlugin.c
+      - uses: ./ClassiCube/.github/actions/upload_build
+        with:
+          SOURCE_FILE: 'ServyvalPlugin-Linux32.so'
+          DEST_NAME: 'ServyvalPlugin-Linux32.so'
+  
+  build_linux64:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,8 +32,8 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 64-bit
-        run: gcc -shared -fPIC -o ServyvalPlugin.so ServyvalPlugin.c
+        run: gcc -shared -fPIC -o ServyvalPlugin-Linux64.so ServyvalPlugin.c
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
-          SOURCE_FILE: 'ServyvalPlugin.so'
+          SOURCE_FILE: 'ServyvalPlugin-Linux64.so'
           DEST_NAME: 'ServyvalPlugin-Linux64.so'
