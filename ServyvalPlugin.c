@@ -133,7 +133,7 @@ static void ServyvalPlugin_Init(void) {
 	
 	emptystr = String_FromReadonly("");
 	
-	TimeMS t = DateTime_CurrentUTC_MS();
+	TimeMS t = DateTime_CurrentUTC();
 	Random_Seed(&rnd, (int)t);
 	
 	Physics.Enabled = true;
