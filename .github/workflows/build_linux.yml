@@ -17,7 +17,7 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 32-bit
-        run: gcc -shared -fPIC -o ServyvalPlugin-Linux32.so *.c
+        run: gcc -shared -fPIC -o ServyvalPlugin-linux-i386.so *.c
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
           SOURCE_FILE: 'ServyvalPlugin-linux-i386.so'
@@ -32,7 +32,7 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 64-bit
-        run: gcc -shared -fPIC -o ServyvalPlugin-Linux64.so *.c
+        run: gcc -shared -fPIC -o ServyvalPlugin-linux-x86_64.so *.c
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
           SOURCE_FILE: 'ServyvalPlugin-linux-x86_64.so'
