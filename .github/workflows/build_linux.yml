@@ -1,5 +1,5 @@
-name: build
-run-name: build
+name: build_linux
+run-name: Build Linux
 on: [push]
 jobs:
   build_linux32:
@@ -17,11 +17,11 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 32-bit
-        run: gcc -shared -fPIC -o ServyvalPlugin-Linux32.so ServyvalPlugin.c
+        run: gcc -shared -fPIC -o ServyvalPlugin-linux-i386.so *.c
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
-          SOURCE_FILE: 'ServyvalPlugin-Linux32.so'
-          DEST_NAME: 'ServyvalPlugin-Linux32.so'
+          SOURCE_FILE: 'ServyvalPlugin-linux-i386.so'
+          DEST_NAME: 'ServyvalPlugin-linux-i386.so'
   
   build_linux64:
     runs-on: ubuntu-latest
@@ -32,8 +32,8 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       - name: Complile for Linux 64-bit
-        run: gcc -shared -fPIC -o ServyvalPlugin-Linux64.so ServyvalPlugin.c
+        run: gcc -shared -fPIC -o ServyvalPlugin-linux-x86_64.so *.c
       - uses: ./ClassiCube/.github/actions/upload_build
         with:
-          SOURCE_FILE: 'ServyvalPlugin-Linux64.so'
-          DEST_NAME: 'ServyvalPlugin-Linux64.so'
+          SOURCE_FILE: 'ServyvalPlugin-linux-x86_64.so'
+          DEST_NAME: 'ServyvalPlugin-linux-x86_64.so'

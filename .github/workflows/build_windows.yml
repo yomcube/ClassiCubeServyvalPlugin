@@ -1,0 +1,30 @@
+name: build_windows
+run-name: Build Windows
+on: [push]
+jobs:
+  build_windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone ClassiCube/ClassiCube
+        run: git clone https://github.com/ClassiCube/ClassiCube
+      - name: Install packages
+        run: |
+          sudo apt-get -y install gcc-mingw-w64 mingw-w64-tools
+      - name: Create a symbolic link to `src/`
+        run: ln -s ClassiCube/src/
+      
+      - name: Compile for x86_64
+        run: |
+          x86_64-w64-mingw64-gcc -fno-math-errno src/*.c -o ClassiCube.exe -mwindows -lwinmm
+          gendef ClassiCube.exe
+          x86_64-w64-mingw64-dlltool -d ClassiCube.def -l libClassiCube.a -D ClassiCube.exe
+          x86_64-w64-mingw64-gcc -s -shared -L . -lClassiCube -o ServyvalPlugin-win-x86_64.dll *.c
+          rm ClassiCube.*
+      
+      # Upload builds
+      - name: Upload x86_64 build
+        uses: ./ClassiCube/.github/actions/upload_build
+        with:
+          SOURCE_FILE: 'ServyvalPlugin-win-x86_64.dll'
+          DEST_NAME: 'ServyvalPlugin-win-x86_64.dll'
