@@ -1,5 +1,5 @@
-name: build
-run-name: build
+name: build_windows
+run-name: Build Windows
 on: [push]
 jobs:
   build_windows:

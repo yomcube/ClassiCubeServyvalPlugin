@@ -1,5 +1,5 @@
-name: build
-run-name: build
+name: build_linux
+run-name: Build Linux
 on: [push]
 jobs:
   build_linux32:
