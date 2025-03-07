@@ -14,28 +14,15 @@ jobs:
       - name: Create a symbolic link to `src/`
         run: ln -s ClassiCube/src/
       
-      - name: Compile for i686
-        run: |
-          i686-w64-mingw32-gcc -fno-math-errno src/*.c -o ClassiCube.exe -mwindows -lwinmm
-          gendef ClassiCube.exe
-          i686-w64-mingw32-dlltool -d ClassiCube.def -l libClassiCube.a -D ClassiCube.exe
-          i686-w64-mingw32-gcc -s -shared -L . -lClassiCube -o ServyvalPlugin-win-i686.dll *.c
-          rm ClassiCube.*
-      
       - name: Compile for x86_64
         run: |
-          x86_64-w64-mingw32-gcc -fno-math-errno src/*.c -o ClassiCube.exe -mwindows -lwinmm
+          x86_64-w64-mingw64-gcc -fno-math-errno src/*.c -o ClassiCube.exe -mwindows -lwinmm
           gendef ClassiCube.exe
-          x86_64-w64-mingw32-dlltool -d ClassiCube.def -l libClassiCube.a -D ClassiCube.exe
-          x86_64-w64-mingw32-gcc -s -shared -L . -lClassiCube -o ServyvalPlugin-win-x86_64.dll *.c
+          x86_64-w64-mingw64-dlltool -d ClassiCube.def -l libClassiCube.a -D ClassiCube.exe
+          x86_64-w64-mingw64-gcc -s -shared -L . -lClassiCube -o ServyvalPlugin-win-x86_64.dll *.c
           rm ClassiCube.*
       
       # Upload builds
-      - name: Upload i686 build
-        uses: ./ClassiCube/.github/actions/upload_build
-        with:
-          SOURCE_FILE: 'ServyvalPlugin-win-i686.dll'
-          DEST_NAME: 'ServyvalPlugin-win-i686.dll'
       - name: Upload x86_64 build
         uses: ./ClassiCube/.github/actions/upload_build
         with:
