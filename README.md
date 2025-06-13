@@ -7,7 +7,5 @@ The latest version can be downloaded [here](https://github.com/yomcube/ClassiCub
 ## How to compile
 ### Linux
 ```bash
-git clone https://github.com/ClassiCube/ClassiCube
-ln -s ClassiCube/src/
-gcc -shared -fPIC -o ServyvalPlugin.so ServyvalPlugin.c
+g++ -shared -fPIC -o ServyvalPlugin.so ServyvalPlugin.c
 ```
